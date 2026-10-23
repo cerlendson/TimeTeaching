@@ -10,7 +10,6 @@ export class AnalogClock {
     this.svg.append(svgElement('circle',{cx:200,cy:204,r:190,fill:'#d9d0eb'}),svgElement('circle',{cx:200,cy:198,r:190,fill:'#b4a1e2'}),svgElement('circle',{cx:200,cy:198,r:179,fill:'#fffdf7',stroke:'#e2d9ef','stroke-width':2}));
     for(let i=0;i<60;i++) {const a=i*Math.PI/30,r1=i%5===0?149:155,r2=163;this.svg.append(svgElement('line',{x1:200+Math.sin(a)*r1,y1:200-Math.cos(a)*r1,x2:200+Math.sin(a)*r2,y2:200-Math.cos(a)*r2,stroke:i%5===0?'#4d455f':'#c1b8ca','stroke-width':i%5===0?3:1.5,'stroke-linecap':'round'}));}
     for(let n=1;n<=12;n++){const a=n*Math.PI/6;const text=svgElement('text',{x:200+Math.sin(a)*127,y:200-Math.cos(a)*127+9,'text-anchor':'middle',class:'clock-number'});text.textContent=n;this.svg.append(text);}
-    const brand=svgElement('text',{x:200,y:266,'text-anchor':'middle',class:'clock-brand'});brand.textContent='MAKE TIME TO SHINE';this.svg.append(brand);
     this.hands={};
     for(const [name,length,colour,width] of [['hour',83,'#7760c6',13],['minute',119,'#e78a56',9]]){
       const g=svgElement('g',{class:`clock-hand ${name}-hand`,'data-hand':name});
