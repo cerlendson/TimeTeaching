@@ -8,7 +8,7 @@ try { progress=normalizeProgress(JSON.parse(localStorage.getItem(STORAGE_KEY)));
 const generator=new QuestionGenerator();
 let currentLevel=progress.lastLevel, question=null, firstChecked=false, finished=false, questionNumber=0, currentView='home';
 const heroClock=new AnalogClock($('#hero-clock'),{time:610,interactive:true,step:1});
-const gameClock=new AnalogClock($('#game-clock'),{time:0,onChange:updateSetOutputs});
+const gameClock=new AnalogClock($('#game-clock'),{time:0});
 
 function save() {
   try { localStorage.setItem(STORAGE_KEY,JSON.stringify(progress)); storageAvailable=true; }
@@ -70,12 +70,11 @@ function nextQuestion(focus=true){
   // The initial set clock always differs from the solution; no accidental free answers.
   let initial=isRead||isMath?question.base:wrap(question.answer+185);
   if(initial===question.answer&&!isRead)initial=wrap(initial+60);
-  gameClock.setInteractive(!isRead,step);gameClock.setTime(initial);updateSetOutputs();
+  gameClock.setInteractive(!isRead,step);gameClock.setTime(initial);
   $('#clock-instruction').textContent=isRead?'Start with the short hand. Then count the minutes.':`Drag a hand to move it. ${step===5?'Minutes move in steps of 5.':'Each small tick is 1 minute.'}`;
   if(focus)$('#game-title').focus({preventScroll:true});
 }
 
-function updateSetOutputs(){if(!gameClock)return;$('#set-hour').textContent=Math.floor(gameClock.time/60)||12;$('#set-minute').textContent=String(gameClock.time%60).padStart(2,'0');}
 function feedback(title,copy,kind){const el=$('#feedback');el.className=`feedback ${kind}`;el.replaceChildren();const strong=document.createElement('strong');strong.textContent=title;el.append(strong,document.createTextNode(copy));el.hidden=false;}
 function checkAnswer(event){
   event.preventDefault();if(!question||finished)return;
@@ -148,7 +147,7 @@ function confetti(){
 
 document.addEventListener('click',event=>{
   const level=event.target.closest('[data-level]');if(level){startLevel(level.dataset.level);return;}
-  const adjust=event.target.closest('[data-adjust]');if(adjust&&!finished){let value=Number(adjust.dataset.adjust);if(Math.abs(value)===1)value*=currentLevel===1?5:1;gameClock.setTime(gameClock.time+value);updateSetOutputs();return;}
+  const adjust=event.target.closest('[data-adjust]');if(adjust&&!finished){let value=Number(adjust.dataset.adjust);if(Math.abs(value)===1)value*=currentLevel===1?5:1;gameClock.setTime(gameClock.time+value);return;}
   const action=event.target.closest('[data-action]')?.dataset.action;
   if(action==='start'||action==='continue')startLevel(progress.lastLevel);
   if(action==='home')go('home');if(action==='help')openLesson();if(action==='lesson')openLesson(currentLevel);
