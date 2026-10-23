@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7660cf">
+  <meta name="description" content="Little ticks, big discoveries. Learn to read clocks, set the hands, and explore time with four playful levels for Grades 3–5.">
+  <title>Tick Tock Club — A little time. A big adventure.</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to learning</a>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Tick Tock Club home"><span class="brand-clock" aria-hidden="true"><i></i></span><span>tick tock<span class="brand-club">CLUB</span></span></a>
+    <nav aria-label="Main navigation">
+      <a href="#home" id="nav-home" class="active">Let’s learn</a>
+      <a href="#progress" id="nav-progress"><span aria-hidden="true">↗</span> My progress</a>
+      <button class="help-nav" data-action="help"><span aria-hidden="true">?</span><span class="help-label">How to play</span></button>
+    </nav>
+    <div class="header-streak" aria-label="Current streak"><span aria-hidden="true">✦</span> <b id="header-streak">0</b> <span>daydreams? No, great answers!</span><small>in a row</small></div>
+  </header>
+  <main id="main" tabindex="-1">
+    <section id="home-view" class="view" aria-labelledby="home-title">
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> LITTLE TICKS. BIG DISCOVERIES.</div>
+          <h1 id="home-title">It’s your time<br>to <span class="learn-word">shine.<svg viewBox="0 0 240 20" aria-hidden="true"><path d="M4 13Q105 -1 232 9M23 18Q126 7 215 15"/></svg></span><span class="hero-spark" aria-hidden="true">✧</span></h1>
+          <p>Read the clock. Move the hands.<br>Turn a little practice into a big adventure.</p>
+          <div class="hero-actions"><button class="button primary" data-action="start">Let’s play <span aria-hidden="true">↗</span></button><button class="text-button" data-action="help">Show me how <span aria-hidden="true">→</span></button></div>
+          <div class="hero-details"><span><i aria-hidden="true">✓</i> Made for curious minds, ages 8–11</span><span><i aria-hidden="true">✓</i> Learn at your own pace</span></div>
+        </div>
+        <div class="hero-art">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <span class="art-star star-one" aria-hidden="true">✦</span><span class="art-star star-two" aria-hidden="true">✳</span><span class="art-dot" aria-hidden="true"></span>
+          <div class="floating-note note-top"><span aria-hidden="true">✌</span> A little practice.<br><b>A lot of possibility.</b></div>
+          <div id="hero-clock" class="hero-clock"></div>
+          <div class="floating-note note-bottom"><span class="small-hand" aria-hidden="true">↖</span><span>Give it a spin!<small>Try dragging the hands.</small></span></div>
+        </div>
+      </div>
+      <section class="paths" aria-labelledby="paths-title">
+        <div class="section-heading"><div><div class="eyebrow">YOUR NEXT ADVENTURE</div><h2 id="paths-title">Small steps. Big clock skills.</h2></div><span class="section-aside">Pick a level. Find your rhythm. <span aria-hidden="true">↘</span></span></div>
+        <div class="level-grid" id="level-grid"></div>
+      </section>
+      <section class="home-bottom" aria-label="Learning encouragement">
+        <div class="journey-card"><span class="journey-star" aria-hidden="true">★</span><div><h3>Every little win adds up.</h3><p>Build a streak, earn badges, and watch yourself grow.</p></div><a href="#progress">See my progress <span aria-hidden="true">→</span></a></div>
+        <div class="gentle-note"><span aria-hidden="true">♡</span><p>No timer. No pressure.<br><b>Just you, getting better.</b></p></div>
+      </section>
+    </section>
+
+    <section id="game-view" class="view" hidden aria-labelledby="game-title">
+      <div class="game-top"><button class="text-button" data-action="home">← All levels</button><div id="level-heading"></div><button class="text-button" data-action="lesson">Quick lesson <span aria-hidden="true">↗</span></button></div>
+      <div class="stats-strip" aria-label="Your learning stats"><div><span class="stat-symbol orange" aria-hidden="true">✦</span><span><strong id="stat-streak">0</strong><small>Current streak</small></span></div><div><span class="stat-symbol purple" aria-hidden="true">♜</span><span><strong id="stat-best">0</strong><small>Best streak</small></span></div><div><span class="stat-symbol green" aria-hidden="true">✓</span><span><strong id="stat-correct">0</strong><small>Total correct</small></span></div><div><span class="stat-symbol blue" aria-hidden="true">◷</span><span><strong id="stat-total">0</strong><small>Questions answered</small></span></div></div>
+      <div class="play-card">
+        <div class="clock-zone"><div class="mode-pill" id="mode-label"></div><div id="game-clock" class="game-clock"></div><div class="clock-legend"><span><i class="hour-dot"></i>Short hand = hours</span><span><i class="minute-dot"></i>Long hand = minutes</span></div><p class="clock-instruction" id="clock-instruction"></p><div class="clock-tools" id="clock-tools" hidden><div><span>Hour</span><button data-adjust="-60" aria-label="Move hour hand back one hour">−</button><output id="set-hour">12</output><button data-adjust="60" aria-label="Move hour hand forward one hour">+</button></div><div><span>Minute</span><button data-adjust="-1" aria-label="Move minute hand back">−</button><output id="set-minute">00</output><button data-adjust="1" aria-label="Move minute hand forward">+</button></div></div></div>
+        <div class="question-zone"><div class="question-meta"><span id="question-count"></span><span>YOU’VE GOT THIS!</span></div><h1 id="game-title" tabindex="-1"></h1><p id="question-description"></p><div id="given-time" class="given-time" hidden></div>
+          <form id="answer-form" novalidate><div id="read-inputs" class="time-inputs"><label>Hour<select id="answer-hour" aria-label="Your answer: hour"><option value="">–</option></select></label><span class="time-colon" aria-hidden="true">:</span><label>Minute<select id="answer-minute" aria-label="Your answer: minute"><option value="">– –</option></select></label></div><p id="set-reminder" class="set-reminder" hidden>Drag the coloured hands, or use the + and − buttons.</p><button class="button primary check-button" id="check-button" type="submit">Check my answer <span aria-hidden="true">→</span></button></form>
+          <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+          <div class="question-actions"><button class="text-button" id="hint-button" data-action="hint">☼ A little hint</button><button class="text-button" id="reveal-button" data-action="reveal" hidden>Show me the answer</button><button class="button primary" id="next-button" data-action="next" hidden>Next adventure →</button></div>
+          <div id="hint" class="hint" role="status" hidden></div>
+          <div id="advance-suggestion" class="advance-suggestion" hidden></div>
+        </div>
+      </div>
+      <div class="next-badge"><span aria-hidden="true">★</span><div><b id="next-badge-title">Your next little win</b><span id="next-badge-copy"></span></div><div class="badge-meter" role="progressbar" aria-label="Progress to next badge" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><i id="badge-meter-fill"></i></div></div>
+    </section>
+
+    <section id="progress-view" class="view" hidden aria-labelledby="progress-title">
+      <div class="progress-heading"><div class="eyebrow">LOOK HOW FAR YOU’VE COME</div><h1 id="progress-title" tabindex="-1">Little wins. <span>Big progress.</span></h1><p>A growing collection of your clock adventures.</p></div>
+      <div class="dashboard-stats" id="dashboard-stats"></div>
+      <div class="dashboard-columns"><section class="panel"><div class="section-heading"><div><div class="eyebrow">YOUR BADGE COLLECTION</div><h2>Stars in the making</h2></div><span id="badge-count" class="count-pill"></span></div><div id="achievement-grid" class="achievement-grid"></div></section><section class="panel performance-panel"><div class="eyebrow">A LITTLE BETTER, EVERY DAY</div><h2>Your learning path</h2><div id="level-performance"></div></section></div>
+      <div class="parent-note"><div><h3>For teachers & parents</h3><p>Accuracy uses the first answer to each question. Retries are for practice. Progress is saved in this browser on this device.</p><p id="highest-level"></p></div><button class="button primary" data-action="continue">Keep learning →</button></div>
+    </section>
+  </main>
+  <footer><a class="footer-brand" href="#home">tick tock club <span aria-hidden="true">✦</span></a><span>A little time. A big adventure.</span><span class="saved-note" id="saved-note"><i></i> Your progress stays with you</span></footer>
+  <dialog id="lesson-dialog" aria-labelledby="lesson-title"><button class="dialog-close" data-action="close-dialog" aria-label="Close lesson">×</button><div class="eyebrow">LET’S FIGURE IT OUT TOGETHER</div><h2 id="lesson-title"></h2><div id="lesson-content"></div><button class="button primary" data-action="close-dialog">I’ve got this! →</button></dialog>
+  <dialog id="badge-dialog" class="badge-dialog" aria-labelledby="badge-title"><button class="dialog-close" data-action="close-badge" aria-label="Close celebration">×</button><div class="eyebrow">A LITTLE PRACTICE. A BIG WIN.</div><div class="celebration-star" aria-hidden="true">★</div><h2 id="badge-title"></h2><p id="badge-description"></p><button class="button primary" data-action="close-badge">Keep shining! →</button></dialog>
+  <div id="confetti" aria-hidden="true"></div>
+</body>
+</html>
