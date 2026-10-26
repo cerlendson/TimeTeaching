@@ -12,6 +12,30 @@ With Docker Compose installed, run `docker compose up -d` and open `http://local
 
 The container serves the static game only; it has no database or server-side student records. Progress remains in each browser's local storage, so no container volume is needed.
 
+## Install on Unraid
+
+The public image is `ghcr.io/cerlendson/timeteaching:latest`. You can install it with the included Unraid template or add it manually.
+
+### Use the included template
+
+In an Unraid Web Terminal, download the template into Unraid's user templates folder:
+
+```sh
+mkdir -p /boot/config/plugins/dockerMan/templates-user
+wget -O /boot/config/plugins/dockerMan/templates-user/tick-tock-club.xml https://raw.githubusercontent.com/cerlendson/TimeTeaching/main/unraid/tick-tock-club.xml
+```
+
+Then open **Docker → Add Container**, select **Tick Tock Club** from the template list, and click **Apply**. Unraid will pull the image and create the container.
+
+### Add it manually
+
+1. Open **Docker → Add Container** in Unraid.
+2. Set **Name** to `tick-tock-club` and **Repository** to `ghcr.io/cerlendson/timeteaching:latest`.
+3. Select **Bridge** networking and add a TCP port mapping from host port `4173` to container port `4173`.
+4. Click **Apply**, then open `http://<unraid-ip>:4173` in a browser on your network.
+
+No volume mappings are needed. The game saves progress in each browser's local storage. If host port `4173` is already in use, change the host port and keep the container port at `4173`. The app has no sign-in, so keep it on a trusted network or put it behind a reverse proxy that provides authentication before exposing it beyond your local network.
+
 ## Files
 
 - `dist/index.html`: accessible single-page screens and dialogs.
