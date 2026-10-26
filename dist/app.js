@@ -1,6 +1,7 @@
 import { LEVELS, BADGES, QuestionGenerator, emptyProgress, normalizeProgress, recordAnswer, formatTime, wrap, durationText, accuracy, readHint, mathHint } from './engine.mjs';
 import { AnalogClock } from './clock.mjs';
 const $=selector=>document.querySelector(selector);
+// Keep this key stable across the rebrand so returning players retain their saved progress.
 const STORAGE_KEY='tick-tock-club-progress-v1';
 let storageAvailable=true;
 let progress;

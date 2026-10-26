@@ -1,7 +1,7 @@
 services:
-  tick-tock-club:
-    image: ghcr.io/cerlendson/timeteaching:latest
-    container_name: tick-tock-club
+  abby-oclock:
+    image: ghcr.io/cerlendson/abby-oclock:latest
+    container_name: abby-oclock
     ports:
       - "${WEBUI_BIND:-0.0.0.0}:${WEBUI_PORT:-4173}:4173"
     restart: unless-stopped

@@ -41,7 +41,7 @@ button:focus-visible, a:focus-visible, select:focus-visible, summary:focus-visib
   gap: 20px;
 }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 25px; font-weight: 800; letter-spacing: -1px; line-height: .9; }
-.brand-club { display: block; margin-top: 8px; font-size: 9px; letter-spacing: 5.5px; }
+.brand-suffix { display: block; margin-top: 8px; font-size: 9px; letter-spacing: 5.5px; }
 .brand-clock { position: relative; width: 40px; height: 40px; border-radius: 13px; background: #8c76d2; transform: rotate(-8deg); }
 .brand-clock::before { content: ''; position: absolute; inset: 7px; border: 2px solid #fffdf7; border-radius: 50%; }
 .brand-clock::after { content: ''; position: absolute; left: 19px; top: 11px; width: 7px; height: 10px; border-left: 2px solid #fffdf7; border-bottom: 2px solid #fffdf7; }
@@ -200,7 +200,7 @@ dialog .button { width: 100%; margin-top: 15px; }
   .brand-clock { height: 36px; width: 36px; border-radius: 11px; }
   .brand-clock::before { inset: 6px; }
   .brand-clock::after { left: 17px; top: 9px; }
-  .brand-club { font-size: 8px; letter-spacing: 4.5px; margin-top: 7px; }
+  .brand-suffix { font-size: 8px; letter-spacing: 4.5px; margin-top: 7px; }
   .site-header nav { gap: 0; }
   .site-header nav a { font-size: 14px; padding: 11px 12px; }
   .view { padding: 0 18px; }

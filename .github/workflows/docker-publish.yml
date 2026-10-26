@@ -1,4 +1,4 @@
-name: Publish Docker image
+name: Publish Abby O'Clock Docker image
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ghcr.io/cerlendson/timeteaching
+  IMAGE_NAME: ghcr.io/cerlendson/abby-oclock
 
 permissions:
   contents: read
