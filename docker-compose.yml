@@ -1,0 +1,12 @@
+services:
+  tick-tock-club:
+    image: ghcr.io/cerlendson/timeteaching:latest
+    container_name: tick-tock-club
+    ports:
+      - "${WEBUI_BIND:-0.0.0.0}:${WEBUI_PORT:-4173}:4173"
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

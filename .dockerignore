@@ -1,0 +1,12 @@
+.git
+.github
+.openai
+.env
+.env.*
+!.env.example
+node_modules
+artifacts
+tests
+*.tar
+*.tar.gz
+*.log

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>tick-tock-club</Name>
+  <Repository>ghcr.io/cerlendson/timeteaching:latest</Repository>
+  <Registry>https://github.com/cerlendson/TimeTeaching/pkgs/container/timeteaching</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/cerlendson/TimeTeaching</Support>
+  <Project>https://github.com/cerlendson/TimeTeaching</Project>
+  <Overview>Self-hosted static clock learning game for elementary students. Progress is saved in each browser.</Overview>
+  <Category>Education:Other</Category>
+  <WebUI>http://[IP]:[PORT:4173]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/cerlendson/TimeTeaching/main/unraid/tick-tock-club.xml</TemplateURL>
+  <Icon/>
+  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <Requires/>
+  <Config Name="WebUI Port" Target="4173" Default="4173" Mode="tcp" Description="Web interface port." Type="Port" Display="always" Required="true" Mask="false">4173</Config>
+</Container>

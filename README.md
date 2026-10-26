@@ -6,6 +6,12 @@ A static, dependency-free clock learning game for Grades 3–5. Four levels mix 
 
 Requires Node.js. From this folder, run `npm start` and open `http://127.0.0.1:4173`. Run `npm test` for the learning-logic tests. Deploy the `dist` directory to any static host. No build step or backend is required.
 
+## Run in Docker
+
+With Docker Compose installed, run `docker compose up -d` and open `http://localhost:4173`. The Compose file uses the image published to GitHub Container Registry. To change the host port or network binding, copy `.env.example` to `.env` and edit those values. See [DOCKER.md](DOCKER.md) for build, update, Unraid, and troubleshooting instructions.
+
+The container serves the static game only; it has no database or server-side student records. Progress remains in each browser's local storage, so no container volume is needed.
+
 ## Files
 
 - `dist/index.html`: accessible single-page screens and dialogs.
