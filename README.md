@@ -1,6 +1,6 @@
 # Abby O'Clock
 
-A static, dependency-free clock learning game for kids aged 6–10 (works on phones, tablets, and desktops). Four levels mix reading an analog clock and setting its hands, then build up to elapsed time and hour/minute arithmetic.
+A static, dependency-free clock learning game for kids aged 6–10 (works on phones, tablets, and desktops). Four levels mix reading an analog clock, setting its hands, matching a digital time to the right clock, and using time words (quarter past, half past, 10 to 4), then build up to elapsed time and hour/minute arithmetic.
 
 ## Run locally
 
@@ -42,6 +42,8 @@ No volume mappings are needed. The game saves progress in each browser's local s
 
 - `dist/index.html`: accessible single-page screens and dialogs.
 - `dist/styles.css`: responsive layout, clock styling, and reduced-motion-aware celebrations.
+- `dist/mascot.mjs`: Abby the owl, with idle, happy, worried, and thinking moods and a wearable sticker slot.
+- `dist/kids.css`: the kid-friendly theme, mascot animation, sticker book, and phone/tablet layouts.
 - `dist/clock.mjs`: SVG analog clock with pointer and keyboard controls.
 - `dist/engine.mjs`: balanced question generation, time math, progress validation, and achievements.
 - `dist/app.js`: navigation, questions, local storage, lessons, and feedback.
@@ -53,3 +55,8 @@ Each question's first valid check counts once toward totals, accuracy, and strea
 Clocks use a 12-hour cycle without AM/PM. The hour hand advances proportionally as minutes change. Level 1 minute controls snap to five-minute increments. Crossing 12 with the minute hand moves the hour correctly. Pointer, keyboard arrow, and large +/− controls offer multiple ways to set the clock. The controls have no numeric readouts. Reduced motion follows the browser preference.
 
 Progress lives only in this browser; no accounts, analytics, or remote student records. The existing browser save key is retained so returning players keep their progress after the rebrand. Restricted storage falls back to the current visit, with an on-screen notice. The game shows only a small current-streak indicator. My progress shows streaks and badges, with accuracy, totals, highest level visited, and per-level results inside a teacher/parent disclosure.
+
+
+## Stickers and Abby
+
+Twelve collectible stickers unlock as total correct answers grow, starting at 3 correct. Tap an unlocked sticker in the sticker book on the progress screen to have Abby wear it. A miss never takes a sticker away. Levels 1 and 2 rotate through four question types: read, set, match the clock, and time words.

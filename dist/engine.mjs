@@ -16,7 +16,7 @@ export class QuestionGenerator {
   constructor(random = Math.random) { this.random = random; this.recent = []; this.bags = {}; }
   next(level) {
     // Balanced bags give equal practice in each mode and each math direction.
-    if (!this.bags[level]?.length) this.bags[level] = shuffle(level < 3 ? ['read:0','set:0'] : ['read:1','set:1','read:-1','set:-1'], this.random);
+    if (!this.bags[level]?.length) this.bags[level] = shuffle(level < 3 ? ['read:0','set:0','match:0','words:0'] : ['read:1','set:1','read:-1','set:-1'], this.random);
     const [mode, direction] = this.bags[level].pop().split(':');
     let question;
     for (let attempt=0; attempt<1000; attempt++) {
@@ -33,13 +33,14 @@ export class QuestionGenerator {
   }
 }
 
-export function emptyProgress() { return { version: 1, streak: 0, best: 0, correct: 0, total: 0, highestLevel: 1, lastLevel: 1, achievements: [], levels: Object.fromEntries(LEVELS.map(l=>[l.id,{correct:0,total:0}])) }; }
+export function emptyProgress() { return { version: 1, streak: 0, best: 0, correct: 0, total: 0, highestLevel: 1, lastLevel: 1, achievements: [], equipped: '', levels: Object.fromEntries(LEVELS.map(l=>[l.id,{correct:0,total:0}])) }; }
 const count = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
 export function normalizeProgress(raw) {
   const p = emptyProgress(); if (!raw || typeof raw !== 'object') return p;
   p.total=count(raw.total); p.correct=Math.min(count(raw.correct),p.total); p.best=Math.min(count(raw.best),p.correct); p.streak=Math.min(count(raw.streak),p.best);
   p.highestLevel = Math.min(4,Math.max(1,count(raw.highestLevel))); p.lastLevel=Math.min(4,Math.max(1,count(raw.lastLevel)));
   p.achievements=BADGES.filter(b=>p.best>=b.threshold).map(b=>b.id);
+  { const sticker=STICKERS.find(x=>x.id===raw.equipped); p.equipped=sticker&&p.correct>=sticker.threshold?sticker.id:''; }
   for (const l of LEVELS) { const v=raw.levels?.[l.id]; const total=count(v?.total); p.levels[l.id]={total,correct:Math.min(total,count(v?.correct))}; }
   return p;
 }
@@ -60,4 +61,55 @@ export function readHint(time, level) {
 export function mathHint(question) {
   const n=Math.abs(question.delta), hours=Math.floor(n/60), minutes=n%60, word=question.delta>0?'forward':'back';
   return `Start at ${formatTime(question.base)}. ${hours?`Move ${word} ${durationText(hours*60)} first. `:''}${minutes?`Then count ${word} ${durationText(minutes)}. `:''}Each hour has 60 minutes. After 12 comes 1 on our clock.`;
+}
+
+// Collectible stickers unlock from the total number of correct answers, so they can never be lost by a miss.
+export const STICKERS = [
+  { id: 'bow', emoji: '🎀', name: 'Pretty Bow', slot: 'head', threshold: 3 },
+  { id: 'shades', emoji: '🕶️', name: 'Cool Shades', slot: 'face', threshold: 6 },
+  { id: 'tophat', emoji: '🎩', name: 'Top Hat', slot: 'head', threshold: 10 },
+  { id: 'flower', emoji: '🌸', name: 'Flower', slot: 'head', threshold: 15 },
+  { id: 'rainbow', emoji: '🌈', name: 'Rainbow', slot: 'side', threshold: 20 },
+  { id: 'crown', emoji: '👑', name: 'Royal Crown', slot: 'head', threshold: 30 },
+  { id: 'cap', emoji: '🎓', name: 'Smart Cap', slot: 'head', threshold: 40 },
+  { id: 'star', emoji: '🌟', name: 'Shiny Star', slot: 'side', threshold: 50 },
+  { id: 'rocket', emoji: '🚀', name: 'Rocket', slot: 'side', threshold: 65 },
+  { id: 'trophy', emoji: '🏆', name: 'Trophy', slot: 'side', threshold: 80 },
+  { id: 'gem', emoji: '💎', name: 'Sparkly Gem', slot: 'side', threshold: 100 },
+  { id: 'unicorn', emoji: '🦄', name: 'Unicorn Friend', slot: 'side', threshold: 125 },
+];
+export const stickersEarned = (before, after) => STICKERS.filter(s => before < s.threshold && after >= s.threshold);
+
+// Time words: "quarter past 3", "10 minutes to 5".
+export const cap = text => text.charAt(0).toUpperCase() + text.slice(1);
+export function timePhrase(time) {
+  const t = wrap(time), h = Math.floor(t / 60) || 12, m = t % 60, next = (h % 12) + 1;
+  const mins = n => `${n} minute${n === 1 ? '' : 's'}`;
+  if (m === 0) return `${h} o’clock`;
+  if (m === 15) return `quarter past ${h}`;
+  if (m === 30) return `half past ${h}`;
+  if (m === 45) return `quarter to ${next}`;
+  return m < 30 ? `${mins(m)} past ${h}` : `${mins(60 - m)} to ${next}`;
+}
+// Three choices (one correct) for the "match" and "words" questions. Wrong choices are common mix-ups.
+export function makeChoices(question, random = Math.random) {
+  const T = question.answer, step = question.level === 1 ? 5 : 1, words = question.mode === 'words';
+  const label = words ? timePhrase : formatTime;
+  const h = Math.floor(T / 60), m = T % 60, nearestHour = Math.round(T / 60) * 60;
+  const candidates = words
+    ? [2 * nearestHour - T, T + 60, T - 60, T + step * (1 + Math.floor(random() * 3)), T - step * (1 + Math.floor(random() * 3))]
+    : [(Math.round(m / 5) % 12) * 60 + (h % 12) * 5, T + 60, T - 60, T + step * (1 + Math.floor(random() * 3)), T - step * (1 + Math.floor(random() * 3))];
+  const wrong = [], seen = new Set([label(T)]);
+  const add = value => { const time = wrap(value), key = label(time); if (!seen.has(key)) { seen.add(key); wrong.push(time); } };
+  shuffle(candidates, random).forEach(add);
+  for (let i = 0; wrong.length < 2 && i < 200; i++) add((level => level === 1 ? Math.floor(random() * 144) * 5 : Math.floor(random() * 720))(question.level));
+  const options = shuffle([T, wrong[0], wrong[1]], random);
+  return { options, correctIndex: options.indexOf(T) };
+}
+export function matchHint(time, level) {
+  const t = wrap(time), hour = Math.floor(t / 60) || 12, minute = t % 60;
+  return `Look for the clock where the short purple hand is ${minute === 0 ? 'on' : 'just past'} ${hour} and the long orange hand points ${minute === 0 ? 'to 12' : level === 1 ? `to ${minute / 5} on the big numbers (${minute} minutes)` : `at minute ${minute}`}.`;
+}
+export function vocabHint(time, level) {
+  return `“Past” means after the hour. “To” means before the next hour. A quarter is 15 minutes and a half is 30 minutes. ${readHint(time, level)}`;
 }

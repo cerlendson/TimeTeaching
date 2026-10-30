@@ -5,8 +5,6 @@ body { min-height: 100dvh; background: radial-gradient(circle at 10% 0, #ffe3f1 
 .brand-clock { background: linear-gradient(135deg, #ff8a5c, #ff5fa2); box-shadow: 0 3px 0 #c9407f; }
 .site-header nav a { font-size: 17px; padding: 12px 18px; min-height: 48px; display: inline-flex; align-items: center; }
 .site-header nav a.active { background: #6a4fd8; color: #fff; }
-.mascot { font-size: 72px; line-height: 1; animation: bob 2.4s ease-in-out infinite; }
-@keyframes bob { 50% { transform: translateY(-8px) rotate(4deg); } }
 .home-heading h1 { font-size: clamp(30px, 7vw, 48px); letter-spacing: 0; }
 .home-heading h1 span { color: #ff5fa2; }
 .home-heading p { font-size: 20px; font-weight: 700; }
@@ -59,7 +57,6 @@ dialog p, .lesson-example { font-size: 17px; }
 @media (max-width: 640px) {
   .site-header { height: auto; min-height: 64px; padding: 8px 14px; flex-wrap: wrap; justify-content: center; }
   .site-header nav a { font-size: 16px; padding: 10px 14px; }
-  .mascot { font-size: 56px; }
   .home-heading { padding: 14px 0 18px; }
   .level-card { min-height: 100px; padding: 14px 16px; }
   .level-number { width: 54px; height: 54px; font-size: 32px; }
@@ -73,7 +70,6 @@ dialog p, .lesson-example { font-size: 17px; }
 /* Landscape phones: clock beside the controls so nothing needs scrolling */
 @media (orientation: landscape) and (max-height: 560px) {
   .site-header { height: 52px; min-height: 0; padding: 0 16px; flex-wrap: nowrap; }
-  .mascot { display: none; }
   .home-heading { padding: 4px 0 10px; }
   .level-grid { grid-template-columns: repeat(2, 1fr); max-width: none; }
   .level-card { min-height: 84px; }
@@ -87,3 +83,90 @@ dialog p, .lesson-example { font-size: 17px; }
   .answer-zone { width: 100%; }
 }
 @media (min-width: 900px) { .view { max-width: 860px; } #game-view { max-width: 700px; } }
+
+/* Abby the owl: moods are driven by data-mood on .abby */
+.mascot-btn { background: none; padding: 0; border-radius: 50%; display: block; margin: 0 auto; }
+#home-mascot { font-size: clamp(96px, 26vw, 130px); }
+#game-mascot { font-size: 64px; flex-shrink: 0; }
+#sticker-mascot { font-size: 84px; flex-shrink: 0; }
+.abby { position: relative; display: inline-block; width: 1em; height: 1.083em; line-height: 0; }
+.abby-svg { width: 100%; height: 100%; overflow: visible; }
+.abby .head { transform-box: view-box; transform-origin: 60px 80px; transition: transform .25s; }
+.abby .wing { transform-box: fill-box; transform-origin: 50% 10%; }
+.abby .eyes { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+.abby .pupils { transition: transform .25s; }
+.abby .happy-eyes, .abby .brows { opacity: 0; }
+.abby[data-mood="idle"] .abby-svg { animation: bob 3.2s ease-in-out infinite; }
+.abby[data-mood="happy"] .abby-svg, .abby[data-mood="cheer"] .abby-svg { animation: hop .55s ease-in-out infinite; }
+.abby[data-mood="happy"] .eyes, .abby[data-mood="cheer"] .eyes { opacity: 0; }
+.abby[data-mood="happy"] .happy-eyes, .abby[data-mood="cheer"] .happy-eyes { opacity: 1; }
+.abby[data-mood="happy"] .wing-l, .abby[data-mood="cheer"] .wing-l { animation: flap-l .3s ease-in-out infinite alternate; }
+.abby[data-mood="happy"] .wing-r, .abby[data-mood="cheer"] .wing-r { animation: flap-r .3s ease-in-out infinite alternate; }
+.abby[data-mood="oops"] .head { transform: rotate(-10deg); }
+.abby[data-mood="oops"] .brows { opacity: 1; }
+.abby[data-mood="oops"] .abby-svg { animation: shake .4s ease-in-out 2; }
+.abby[data-mood="think"] .head { transform: rotate(9deg); }
+.abby[data-mood="think"] .pupils { transform: translate(3px, -4px); }
+.abby[data-mood="think"] .wing-r { transform: rotate(-150deg); }
+@keyframes bob { 50% { transform: translateY(-4%); } }
+@keyframes hop { 50% { transform: translateY(-16%) scale(.98, 1.04); } }
+@keyframes shake { 25% { transform: translateX(-3%); } 75% { transform: translateX(3%); } }
+@keyframes flap-l { to { transform: rotate(35deg); } }
+@keyframes flap-r { to { transform: rotate(-35deg); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
+.acc { position: absolute; line-height: 1; pointer-events: none; }
+.acc:empty { display: none; }
+.acc[data-slot="head"] { left: 50%; top: -9%; font-size: .38em; transform: translateX(-50%) rotate(-8deg); }
+.acc[data-slot="face"] { left: 50%; top: 26%; font-size: .5em; transform: translateX(-50%); }
+.acc[data-slot="side"] { right: -14%; bottom: 4%; font-size: .38em; }
+.coach { display: flex; align-items: center; gap: 10px; text-align: left; margin-bottom: 6px; }
+.speech { position: relative; margin: 0; padding: 8px 14px; background: #fff0b3; border: 3px solid #f2c744; border-radius: 18px; font-size: 16px; font-weight: 800; line-height: 1.3; }
+.speech::before { content: ''; position: absolute; left: -11px; top: 50%; margin-top: -8px; border: 8px solid transparent; border-right-color: #f2c744; border-left: 0; }
+
+/* Tap-to-answer choices (match the clock / time words) */
+.choices { display: grid; gap: 12px; margin: 0 auto 14px; max-width: 560px; }
+.choices.match { grid-template-columns: repeat(3, 1fr); }
+.choice { background: #fff; color: var(--ink); border: 3px solid #d9ccff; border-radius: 22px; box-shadow: 0 5px 0 #d9ccff; padding: 10px; min-height: 64px; font-size: 24px; font-weight: 800; }
+.choice:active { transform: translateY(3px); box-shadow: 0 2px 0 #d9ccff; }
+.choice-clock { display: block; pointer-events: none; }
+.choice.right { background: #d5f5de; border-color: #5bc67c; box-shadow: 0 5px 0 #5bc67c; }
+.choice.wrong { background: #ffe3e3; border-color: #f08a8a; box-shadow: none; }
+.choice:disabled { opacity: 1; cursor: default; }
+.choice.wrong:disabled { opacity: .5; }
+.choice.wrong:active { transform: none; }
+
+/* Sticker book */
+.sticker-panel { margin-top: 20px; }
+.sticker-hero { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.sticker-hero p { font-size: 17px; font-weight: 700; color: #4d4260; }
+.sticker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.sticker { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 112px; padding: 10px 4px; background: #f3f0f8; border: 3px dashed #d6cde6; border-radius: 20px; color: var(--muted); text-align: center; }
+.sticker.earned { background: #fff7d6; border: 3px solid #f2c744; box-shadow: 0 4px 0 #f2c744; color: var(--ink); }
+.sticker.earned:active { transform: translateY(3px); box-shadow: 0 1px 0 #f2c744; }
+.sticker.worn { background: #d5f5de; border-color: #5bc67c; box-shadow: 0 4px 0 #5bc67c; }
+.sticker-art { font-size: 38px; line-height: 1.1; }
+.sticker b { font-size: 14px; line-height: 1.15; }
+.sticker small { font-size: 12px; }
+.lesson-example.vocab { margin-top: 14px; }
+
+@media (max-width: 640px) {
+  #game-mascot { font-size: 54px; }
+  .speech { font-size: 15px; padding: 6px 12px; }
+  .sticker-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .sticker-hero { flex-direction: column; text-align: center; }
+}
+@media (max-width: 520px) {
+  .choices.match { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .choices.match .choice:last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 5px); }
+  .choice { font-size: 21px; padding: 8px; }
+}
+@media (orientation: landscape) and (max-height: 560px) {
+  .play-card { position: relative; }
+  .coach { position: absolute; top: 8px; right: 12px; margin: 0; }
+  .speech { display: none; }
+  #game-mascot { font-size: 46px; }
+  .choices { margin-bottom: 8px; gap: 8px; }
+  .choices.match { grid-column: 1 / -1; }
+  .play-card[data-mode="match"] .answer-zone, .play-card[data-mode="words"] .answer-zone { grid-column: 1 / -1; }
+  .choice-clock { max-width: 110px; margin: 0 auto; }
+}

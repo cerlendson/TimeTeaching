@@ -25,7 +25,7 @@
   <main id="main" tabindex="-1">
     <section id="home-view" class="view" aria-labelledby="home-title">
       <div class="home-heading">
-        <div class="mascot" aria-hidden="true">🦉</div>
+        <button class="mascot-btn" data-action="pet" aria-label="Say hi to Abby the owl"><span id="home-mascot"></span></button>
         <h1 id="home-title">Hi, I’m Abby! Let’s learn <span>time!</span></h1>
         <p>Pick a level to start your adventure.</p>
       </div>
@@ -39,7 +39,8 @@
         <span id="level-heading"></span>
         <span class="streak-pill" aria-label="Current streak"><span aria-hidden="true">⭐</span> <b id="stat-streak">0</b> in a row</span>
       </div>
-      <div class="play-card">
+      <div class="play-card" data-mode="read">
+        <div class="coach"><span id="game-mascot"></span><p class="speech" id="speech" aria-hidden="true"></p></div>
         <div class="question-heading">
           <h1 id="game-title" tabindex="-1"></h1>
           <div id="given-time" class="given-time" hidden></div>
@@ -52,6 +53,7 @@
             <div class="minute-controls"><span>Minute</span><button data-adjust="-1" aria-label="Move minute hand back">−</button><button data-adjust="1" aria-label="Move minute hand forward">+</button></div>
           </div>
         </div>
+        <div id="choices" class="choices" hidden></div>
         <div class="answer-zone">
           <form id="answer-form" novalidate>
             <div id="read-inputs" class="time-inputs">
@@ -86,6 +88,11 @@
           <div class="badge-meter" role="progressbar" aria-label="Progress to next badge" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><i id="badge-meter-fill"></i></div>
         </div>
       </section>
+      <section class="panel sticker-panel" aria-labelledby="stickers-title">
+        <div class="section-heading"><h2 id="stickers-title">My sticker book</h2><span id="sticker-count" class="count-pill"></span></div>
+        <div class="sticker-hero"><span id="sticker-mascot"></span><p id="sticker-help"></p></div>
+        <div id="sticker-grid" class="sticker-grid"></div>
+      </section>
       <button class="button primary continue-button" data-action="continue">Keep playing →</button>
       <details class="teacher-details">
         <summary>For teachers & parents</summary>
@@ -110,6 +117,7 @@
     <button class="dialog-close" data-action="close-badge" aria-label="Close celebration">×</button>
     <div class="celebration-star" aria-hidden="true">★</div>
     <h2 id="badge-title"></h2><p id="badge-description"></p>
+    <button class="button primary" id="wear-button" data-action="wear-new" hidden>Put it on Abby!</button>
     <button class="button primary" data-action="close-badge">Keep playing →</button>
   </dialog>
   <div id="confetti" aria-hidden="true"></div>
