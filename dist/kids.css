@@ -1,0 +1,89 @@
+/* Kid-friendly layer (ages 6-10): bright colours, big round buttons, mascot, touch-first sizing. */
+:root { --paper: #fff8e7; --purple: #6a4fd8; --purple-dark: #5238b8; font-family: 'Nunito', 'Baloo 2', 'Chalkboard SE', 'Comic Sans MS', 'Trebuchet MS', sans-serif; }
+html { -webkit-text-size-adjust: 100%; }
+body { min-height: 100dvh; background: radial-gradient(circle at 10% 0, #ffe3f1 0, transparent 40%), radial-gradient(circle at 95% 10%, #d9f3ff 0, transparent 38%), var(--paper); padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); overscroll-behavior-y: none; }
+.brand-clock { background: linear-gradient(135deg, #ff8a5c, #ff5fa2); box-shadow: 0 3px 0 #c9407f; }
+.site-header nav a { font-size: 17px; padding: 12px 18px; min-height: 48px; display: inline-flex; align-items: center; }
+.site-header nav a.active { background: #6a4fd8; color: #fff; }
+.mascot { font-size: 72px; line-height: 1; animation: bob 2.4s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-8px) rotate(4deg); } }
+.home-heading h1 { font-size: clamp(30px, 7vw, 48px); letter-spacing: 0; }
+.home-heading h1 span { color: #ff5fa2; }
+.home-heading p { font-size: 20px; font-weight: 700; }
+.lavender { --card-bg: #e8dfff; --card-line: #b9a5f5; --card-accent: #5b3fc4; }
+.peach { --card-bg: #ffe0cf; --card-line: #ffae85; --card-accent: #c2481a; }
+.mint { --card-bg: #d5f5de; --card-line: #7fd79a; --card-accent: #1d7a43; }
+.yellow { --card-bg: #fff0b3; --card-line: #f2c744; --card-accent: #8a6100; }
+.level-card { border-width: 3px; border-radius: 28px; box-shadow: 0 6px 0 var(--card-line); min-height: 130px; }
+.level-card:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--card-line); }
+.level-number { width: 64px; height: 64px; font-size: 38px; border-radius: 20px; background: #fff; }
+.level-copy strong { font-size: 22px; }
+.level-copy > span { font-size: 16px; color: #4d4260; }
+.button { min-height: 58px; font-size: 20px; border-radius: 20px; font-weight: 800; }
+.button.primary { background: linear-gradient(#8467f0, #6a4fd8); box-shadow: 0 5px 0 #4a31a8; }
+.button.primary:hover { background: linear-gradient(#7a5be8, #5f44cc); }
+.button.primary:active { transform: translateY(4px); box-shadow: 0 1px 0 #4a31a8; }
+.text-button { min-height: 48px; font-size: 17px; font-weight: 700; color: #5238b8; }
+.play-card { border: 3px solid #d9ccff; border-radius: 32px; box-shadow: 0 8px 0 #d9ccff; background: #fff; }
+.question-heading h1 { font-size: 32px; letter-spacing: 0; }
+.question-heading p { font-size: 17px; }
+.given-time { font-size: 48px; color: #ff5fa2; }
+.streak-pill { font-size: 16px; font-weight: 800; background: #fff0b3; padding: 6px 12px; border-radius: 20px; }
+.game-clock { width: clamp(230px, min(70vw, 42vh), 340px); }
+.clock-number { font-size: 30px; font-weight: 800; }
+.hand-hit { stroke-width: 56px; }
+.clock-tools { gap: 12px; flex-wrap: wrap; }
+.clock-tools > div { border-width: 2px; border-radius: 18px; padding: 4px 6px 4px 12px; }
+.clock-tools span { font-size: 16px; }
+.clock-tools button { width: 56px; height: 56px; font-size: 32px; font-weight: 800; border-radius: 14px; background: #fff; box-shadow: 0 3px 0 #0002; }
+.clock-tools button:active { transform: translateY(2px); box-shadow: none; }
+.time-inputs select { height: 64px; width: 120px; font-size: 32px; border-width: 3px; border-radius: 16px; }
+.time-inputs label { font-size: 16px; font-weight: 700; }
+.feedback { font-size: 17px; border-radius: 20px; padding: 14px 16px; }
+.feedback strong { font-size: 26px; }
+.feedback.success { background: #d5f5de; color: #17673a; animation: pop .4s ease-out; }
+@keyframes pop { 0% { transform: scale(.8); } 60% { transform: scale(1.06); } 100% { transform: scale(1); } }
+.hint-panel { font-size: 17px; border-radius: 20px; }
+.achievement { border-radius: 20px; }
+.achievement-stars { font-size: 32px; }
+.achievement h3 { font-size: 18px; }
+.achievement p, .achievement small { font-size: 14px; }
+.dashboard-stat strong { font-size: 44px; }
+.dialog-close { width: 52px; height: 52px; }
+dialog { border-radius: 30px; border: 3px solid #d9ccff; }
+dialog p, .lesson-example { font-size: 17px; }
+.celebration-star { font-size: 96px; }
+.confetti-piece { width: 12px; height: 16px; }
+
+/* Phones and small tablets in portrait */
+@media (max-width: 640px) {
+  .site-header { height: auto; min-height: 64px; padding: 8px 14px; flex-wrap: wrap; justify-content: center; }
+  .site-header nav a { font-size: 16px; padding: 10px 14px; }
+  .mascot { font-size: 56px; }
+  .home-heading { padding: 14px 0 18px; }
+  .level-card { min-height: 100px; padding: 14px 16px; }
+  .level-number { width: 54px; height: 54px; font-size: 32px; }
+  .game-clock { width: clamp(220px, 72vw, 320px); }
+  .given-time { font-size: 42px; }
+  .question-heading h1 { font-size: 26px; }
+  .clock-tools button { width: 52px; height: 52px; }
+  .button { min-height: 56px; font-size: 19px; }
+  .time-inputs select { width: 108px; }
+}
+/* Landscape phones: clock beside the controls so nothing needs scrolling */
+@media (orientation: landscape) and (max-height: 560px) {
+  .site-header { height: 52px; min-height: 0; padding: 0 16px; flex-wrap: nowrap; }
+  .mascot { display: none; }
+  .home-heading { padding: 4px 0 10px; }
+  .level-grid { grid-template-columns: repeat(2, 1fr); max-width: none; }
+  .level-card { min-height: 84px; }
+  #game-view { max-width: 900px; }
+  .play-card { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; align-items: center; padding: 14px 20px; }
+  .question-heading { grid-column: 1 / -1; }
+  .question-heading h1 { font-size: 22px; }
+  .given-time { font-size: 32px; }
+  .clock-zone { margin: 0; }
+  .game-clock { width: min(46vh, 240px); }
+  .answer-zone { width: 100%; }
+}
+@media (min-width: 900px) { .view { max-width: 860px; } #game-view { max-width: 700px; } }

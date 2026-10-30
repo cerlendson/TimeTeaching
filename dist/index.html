@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#7660cf">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6a4fd8">
   <meta name="application-name" content="Abby O'Clock">
   <meta name="description" content="Abby O'Clock helps students learn to read clocks, move the hands, and practise time in four fun levels.">
   <title>Abby O'Clock — Let's learn time!</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./kids.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -24,18 +25,19 @@
   <main id="main" tabindex="-1">
     <section id="home-view" class="view" aria-labelledby="home-title">
       <div class="home-heading">
-        <h1 id="home-title">Let’s learn <span>time!</span></h1>
-        <p>Pick a level. Take your time.</p>
+        <div class="mascot" aria-hidden="true">🦉</div>
+        <h1 id="home-title">Hi, I’m Abby! Let’s learn <span>time!</span></h1>
+        <p>Pick a level to start your adventure.</p>
       </div>
       <div class="level-grid" id="level-grid" aria-label="Choose a level"></div>
-      <button class="text-button home-help" data-action="help">How to play</button>
+      <button class="text-button home-help" data-action="help">🎈 How to play</button>
     </section>
 
     <section id="game-view" class="view" hidden aria-labelledby="game-title">
       <div class="game-top">
         <button class="text-button" data-action="home" aria-label="Choose another level">← Levels</button>
         <span id="level-heading"></span>
-        <span class="streak-pill" aria-label="Current streak"><span aria-hidden="true">★</span> <b id="stat-streak">0</b> in a row</span>
+        <span class="streak-pill" aria-label="Current streak"><span aria-hidden="true">⭐</span> <b id="stat-streak">0</b> in a row</span>
       </div>
       <div class="play-card">
         <div class="question-heading">
@@ -57,10 +59,10 @@
               <span class="time-colon" aria-hidden="true">:</span>
               <label>Minute<select id="answer-minute" aria-label="Your answer: minute"><option value="">– –</option></select></label>
             </div>
-            <button class="button primary check-button" id="check-button" type="submit">Check answer</button>
+            <button class="button primary check-button" id="check-button" type="submit">Check my answer! ✔</button>
           </form>
           <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden></div>
-          <button class="button primary" id="next-button" data-action="next" hidden>Next clock →</button>
+          <button class="button primary" id="next-button" data-action="next" hidden>Next clock! ➜</button>
           <div class="question-actions">
             <button class="text-button" id="hint-button" data-action="hint" aria-expanded="false" aria-controls="hint-panel">Need a hint?</button>
             <button class="text-button" id="reveal-button" data-action="reveal" hidden>Show the answer</button>

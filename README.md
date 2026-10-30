@@ -1,6 +1,6 @@
 # Abby O'Clock
 
-A static, dependency-free clock learning game for Grades 3–5. Four levels mix reading an analog clock and setting its hands, then build up to elapsed time and hour/minute arithmetic.
+A static, dependency-free clock learning game for kids aged 6–10 (works on phones, tablets, and desktops). Four levels mix reading an analog clock and setting its hands, then build up to elapsed time and hour/minute arithmetic.
 
 ## Run locally
 

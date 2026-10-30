@@ -10,6 +10,7 @@ const generator=new QuestionGenerator();
 let currentLevel=progress.lastLevel, question=null, firstChecked=false, finished=false, currentView='home';
 const gameClock=new AnalogClock($('#game-clock'),{time:0});
 const levelLabels=['Count by 5s','Every minute','Time jumps','Hours & minutes'];
+const levelIcons=['🐣','🔍','🚀','🏆'];
 const levelDescriptions=['Read times like 3:20.','Read times like 2:17.','Move time forward or back.','Add and subtract bigger times.'];
 
 function save() {
@@ -20,7 +21,7 @@ function save() {
 }
 
 function renderLevels(){
-  $('#level-grid').innerHTML=LEVELS.map(level=>`<button class="level-card ${level.colour}" data-level="${level.id}" aria-label="Play level ${level.id}: ${levelLabels[level.id-1]}"><span class="level-number" aria-hidden="true">${level.id}</span><span class="level-copy"><strong>${levelLabels[level.id-1]}</strong><span>${levelDescriptions[level.id-1]}</span></span><span class="level-arrow" aria-hidden="true">→</span></button>`).join('');
+  $('#level-grid').innerHTML=LEVELS.map(level=>`<button class="level-card ${level.colour}" data-level="${level.id}" aria-label="Play level ${level.id}: ${levelLabels[level.id-1]}"><span class="level-number" aria-hidden="true">${levelIcons[level.id-1]}</span><span class="level-copy"><strong>${levelLabels[level.id-1]}</strong><span>${levelDescriptions[level.id-1]}</span></span><span class="level-arrow" aria-hidden="true">→</span></button>`).join('');
 }
 
 function updateStats(){
@@ -84,20 +85,20 @@ function checkAnswer(event){
   let answer=gameClock.time;
   if(question.mode==='read'){
     const h=$('#answer-hour').value,m=$('#answer-minute').value;
-    if(h===''||m===''){feedback('One little step left!','Choose an hour and a minute, then check your answer.','encourage');(h===''?$('#answer-hour'):$('#answer-minute')).focus();return;}
+    if(h===''||m===''){feedback('Almost there! 🌈','Choose an hour and a minute, then check your answer.','encourage');(h===''?$('#answer-hour'):$('#answer-minute')).focus();return;}
     answer=wrap(Number(h)*60+Number(m));
   }
   const correct=answer===question.answer,practice=firstChecked;
   let unlocked=[];
   if(!firstChecked){unlocked=recordAnswer(progress,currentLevel,correct);firstChecked=true;save();updateStats();}
   if(correct){
-    const messages=['Great job!','Clock Champion!','Nice work!','Look at you shine!'];
+    const messages=['Great job! 🎉','Clock Champion! 🏆','Awesome! 🌟','Look at you shine! ✨','Hooray! 🥳','Super smart! 🦉'];
     feedback(practice?'You found it!':messages[Math.floor(Math.random()*messages.length)],`The time is ${formatTime(question.answer)}.`,'success');
     finishQuestion();confetti();
     if(unlocked.length)showBadge(unlocked[0]);
     else if(!practice&&progress.streak>0&&progress.streak%5===0)$('#feedback').append(document.createTextNode(` ${progress.streak} in a row!`));
   }else{
-    feedback('Have another try!',question.mode==='read'?'Look at the short hand first.':'Move the hands and try again.','encourage');
+    feedback('Oops, try again! 💪',question.mode==='read'?'Look at the short hand first.':'Move the hands and try again.','encourage');
     $('#reveal-button').hidden=false;
   }
 }
