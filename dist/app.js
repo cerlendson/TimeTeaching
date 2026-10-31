@@ -1,6 +1,7 @@
 import { LEVELS, BADGES, QuestionGenerator, emptyProgress, normalizeProgress, recordAnswer, formatTime, wrap, durationText, accuracy, readHint, mathHint, STICKERS, stickersEarned, timePhrase, makeChoices, matchHint, vocabHint, cap } from './engine.mjs';
 import { AnalogClock } from './clock.mjs';
 import { createMascot } from './mascot.mjs';
+import { headExplosion } from './boom.mjs';
 const $=selector=>document.querySelector(selector);
 // Keep this key stable across the rebrand so returning players retain their saved progress.
 const STORAGE_KEY='tick-tock-club-progress-v1';
@@ -131,7 +132,12 @@ function grade(correct){
     feedback(practice?'You found it!':messages[Math.floor(Math.random()*messages.length)],`The time is ${formatTime(question.answer)}.`,'success');
     finishQuestion();confetti();abby('happy',2000);say(practice?'You got it!':'Hooray, you did it!');
     rewardQueue.push(...unlocked.map(b=>()=>showBadge(b)),...stickers.map(st=>()=>showSticker(st)));
-    if(rewardQueue.length)showNextReward();
+    if(!practice&&progress.streak>0&&progress.streak%10===0){
+      // Hold any badge dialog until the head-explosion show is over.
+      say(`BOOM! ${progress.streak} in a row!`);$('#feedback').append(document.createTextNode(` ${progress.streak} in a row!`));
+      headExplosion($('#game-mascot'),progress.streak).then(showNextReward);
+    }
+    else if(rewardQueue.length)showNextReward();
     else if(!practice&&progress.streak>0&&progress.streak%5===0)$('#feedback').append(document.createTextNode(` ${progress.streak} in a row!`));
   }else{
     feedback('Oops, try again! 💪',{read:'Look at the short hand first.',match:'Check where the short hand points first.',words:'Remember: past is after the hour, and to is before the next hour.'}[question.mode]||'Move the hands and try again.','encourage');

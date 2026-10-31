@@ -170,3 +170,33 @@ dialog p, .lesson-example { font-size: 17px; }
   .play-card[data-mode="match"] .answer-zone, .play-card[data-mode="words"] .answer-zone { grid-column: 1 / -1; }
   .choice-clock { max-width: 110px; margin: 0 auto; }
 }
+
+/* Streak-of-10 head explosion (see boom.mjs) */
+.boom-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1000; }
+.boom-flash { position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0; background: radial-gradient(circle, #fff 0%, #fff6b0 40%, rgba(255,160,60,.5) 100%); }
+.boom-flash.go { animation: boom-flash .7s ease-out forwards; }
+.boom-ring { position: fixed; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; border: 10px solid #ffb02e; pointer-events: none; z-index: 998; opacity: 0; animation: boom-ring 1.1s ease-out forwards; }
+.boom-banner { position: fixed; left: 50%; top: 38%; transform: translate(-50%, -50%) scale(0); z-index: 1001; pointer-events: none; text-align: center; line-height: 1; color: #fff; font-weight: 900; text-shadow: 0 6px 0 #5f3fc0, 0 0 30px #ff5fa2; -webkit-text-stroke: 3px #5f3fc0; paint-order: stroke fill; }
+.boom-banner b { display: block; font-size: clamp(64px, 20vw, 170px); letter-spacing: .02em; }
+.boom-banner span { display: block; font-size: clamp(28px, 8vw, 64px); margin-top: 8px; }
+.boom-banner.go { animation: boom-banner 3s cubic-bezier(.2,1.4,.4,1) forwards; }
+body.boom-shake > :not(.boom-canvas):not(.boom-flash):not(.boom-banner):not(.boom-ring) { animation: boom-shake .6s linear; }
+.abby.boom-charge .abby-svg { animation: none; }
+.abby.boom-charge .head { animation: boom-charge 1.1s ease-in forwards; }
+.abby.boom-charge .eyes, .abby.boom-charge .happy-eyes, .abby.boom-charge .brows { opacity: 1; }
+.abby.boom-charge .happy-eyes { opacity: 0; }
+.abby.boom-gone .head { opacity: 0; transition: none; }
+.abby.boom-gone .abby-svg { animation: shake .15s linear 6; }
+.abby.boom-regrow .head { animation: boom-regrow .6s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes boom-charge {
+  0% { transform: scale(1); filter: none; }
+  25% { transform: scale(1.12) rotate(-4deg); filter: brightness(1.1) saturate(1.4); }
+  50% { transform: scale(1.3) rotate(5deg); filter: brightness(1.25) saturate(1.8) hue-rotate(-40deg); }
+  75% { transform: scale(1.55) rotate(-7deg); filter: brightness(1.5) saturate(2.4) hue-rotate(-70deg); }
+  100% { transform: scale(1.9) rotate(8deg); filter: brightness(2.4) saturate(3) hue-rotate(-90deg); }
+}
+@keyframes boom-regrow { from { transform: scale(0) rotate(-90deg); opacity: 1; } to { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes boom-flash { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes boom-ring { 0% { opacity: .95; transform: scale(.3); } 100% { opacity: 0; transform: scale(34); } }
+@keyframes boom-banner { 0% { transform: translate(-50%,-50%) scale(0) rotate(-12deg); } 12% { transform: translate(-50%,-50%) scale(1.15) rotate(4deg); } 20% { transform: translate(-50%,-50%) scale(1) rotate(-2deg); } 80% { transform: translate(-50%,-50%) scale(1) rotate(0); opacity: 1; } 100% { transform: translate(-50%,-50%) scale(1.4); opacity: 0; } }
+@keyframes boom-shake { 0%,100% { transform: translate(0); } 10% { transform: translate(-14px,8px); } 20% { transform: translate(12px,-10px); } 30% { transform: translate(-10px,-12px); } 40% { transform: translate(14px,10px); } 50% { transform: translate(-12px,6px); } 60% { transform: translate(8px,-8px); } 70% { transform: translate(-6px,6px); } 80% { transform: translate(5px,-4px); } 90% { transform: translate(-3px,3px); } }
