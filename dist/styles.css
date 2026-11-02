@@ -265,3 +265,5 @@ dialog .button { width: 100%; margin-top: 15px; }
   .teacher-stats { gap: 8px; }
   .teacher-stats span { font-size: 12px; }
 }
+
+.app-version{display:block;font-size:.75rem;opacity:.55;margin-top:.25rem}

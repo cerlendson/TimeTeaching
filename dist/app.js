@@ -244,3 +244,5 @@ window.addEventListener('storage',event=>{if(event.key!==STORAGE_KEY)return;try{
 for(const dialog of document.querySelectorAll('dialog'))dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
 $('#badge-dialog').addEventListener('close',()=>setTimeout(showNextReward,250));
 dressAbby();renderLevels();updateStats();save();route();
+
+fetch('/version.json',{cache:'no-store'}).then(r=>r.json()).then(v=>{const el=document.getElementById('app-version');if(el)el.textContent=v.version;}).catch(()=>{});

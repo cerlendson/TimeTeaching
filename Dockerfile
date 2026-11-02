@@ -4,6 +4,9 @@ ENV NODE_ENV=production \
     HOST=0.0.0.0 \
     PORT=4173
 
+ARG APP_VERSION=dev
+ENV APP_VERSION=$APP_VERSION
+
 WORKDIR /app
 
 COPY --chown=node:node server.mjs ./server.mjs

@@ -40,6 +40,12 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (pathname === '/version.json') {
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+    res.end(req.method === 'HEAD' ? undefined : JSON.stringify({ version: process.env.APP_VERSION || 'dev' }));
+    return;
+  }
+
   const file = path.resolve(root, `.${pathname === '/' ? '/index.html' : pathname}`);
   if (file !== root && !file.startsWith(root + path.sep)) {
     res.writeHead(403);
