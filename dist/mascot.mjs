@@ -17,14 +17,24 @@ const OWL = `<svg class="abby-svg" viewBox="0 0 120 130" aria-hidden="true" focu
     <g class="brows" fill="none" stroke="#2b2142" stroke-width="4" stroke-linecap="round"><path d="M28 34 52 27"/><path d="M92 34 68 27"/></g>
     <ellipse cx="27" cy="62" rx="6" ry="4" fill="#ff9ec7" opacity=".75"/><ellipse cx="93" cy="62" rx="6" ry="4" fill="#ff9ec7" opacity=".75"/>
     <path d="M53 56h14l-7 14Z" fill="#ffb02e" stroke="#e08a00" stroke-width="1.5" stroke-linejoin="round"/>
+    <g class="acc-head"></g>
   </g>
-</svg><span class="acc" aria-hidden="true"></span>`;
+  <g class="acc-side"></g>
+</svg>`;
+
+// Accessories live inside the SVG so they tilt with Abby's head and bob/hop with her body.
+// Position and size are in the 120x130 viewBox; head items sit in the head group.
+const SPOTS = {
+  head: { group: 'acc-head', x: 60, y: 10, size: 40, rotate: -6 },
+  face: { group: 'acc-head', x: 60, y: 50, size: 50, rotate: 0 },
+  side: { group: 'acc-side', x: 100, y: 112, size: 32, rotate: 0 },
+};
+const BOW_SPOT = { group: 'acc-head', x: 88, y: 16, size: 30, rotate: 18 };
 
 export function createMascot(container) {
   container.classList.add('abby');
   container.dataset.mood = 'idle';
   container.innerHTML = OWL;
-  const accessory = container.querySelector('.acc');
   let timer;
   return {
     // A timed mood falls back to idle so Abby never gets stuck looking worried.
@@ -34,8 +44,16 @@ export function createMascot(container) {
       if (ms) timer = setTimeout(() => { container.dataset.mood = 'idle'; }, ms);
     },
     wear(sticker) {
-      accessory.textContent = sticker ? sticker.emoji : '';
-      accessory.dataset.slot = sticker ? sticker.slot : '';
+      for (const g of container.querySelectorAll('.acc-head, .acc-side')) g.replaceChildren();
+      if (!sticker) return;
+      const spot = sticker.id === 'bow' ? BOW_SPOT : SPOTS[sticker.slot] || SPOTS.head;
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', spot.x); text.setAttribute('y', spot.y);
+      text.setAttribute('font-size', spot.size);
+      text.setAttribute('text-anchor', 'middle'); text.setAttribute('dominant-baseline', 'central');
+      text.setAttribute('transform', `rotate(${spot.rotate} ${spot.x} ${spot.y})`);
+      text.textContent = sticker.emoji;
+      container.querySelector('.' + spot.group).append(text);
     },
   };
 }

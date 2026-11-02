@@ -232,6 +232,7 @@ document.addEventListener('click',event=>{
   const adjust=event.target.closest('[data-adjust]');if(adjust&&!finished){let value=Number(adjust.dataset.adjust);if(Math.abs(value)===1)value*=currentLevel===1?5:1;gameClock.setTime(gameClock.time+value);return;}
   const action=event.target.closest('[data-action]')?.dataset.action;
   if(action==='start'||action==='continue')startLevel(progress.lastLevel);
+  if(action==='reset'){if(confirm('Reset all progress? This erases your score, badges and stickers, and cannot be undone.')){progress=emptyProgress();currentLevel=1;save();dressAbby();renderLevels();updateStats();abby('idle');}return;}
   if(action==='home')go('home');if(action==='help')openLesson();if(action==='lesson')openLesson(currentLevel);
   if(action==='pet')abby('happy',1600);if(action==='wear-new'){if(pendingSticker)equip(pendingSticker.id,false);$('#badge-dialog').close();}
   if(action==='close-dialog')$('#lesson-dialog').close();if(action==='close-badge')$('#badge-dialog').close();
