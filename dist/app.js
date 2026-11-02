@@ -89,7 +89,7 @@ function nextQuestion(focus=true){
   $('#question-description').hidden=isRead&&!isMath;
   // The initial set clock always differs from the solution; no accidental free answers.
   let initial=isRead||isMath||isChoice?question.base:wrap(question.answer+185);
-  if(initial===question.answer&&!isRead)initial=wrap(initial+60);
+  if(initial===question.answer&&!isRead&&!isChoice)initial=wrap(initial+60);
   gameClock.setInteractive(!isRead&&!isChoice,step);gameClock.setTime(initial);
   abby('idle');say(question.mode==='match'?'Match the numbers to a clock!':question.mode==='words'?'Say it with time words!':askLines[Math.floor(Math.random()*askLines.length)]);
   if(focus){window.scrollTo({top:0,behavior:'instant'});$('#game-title').focus({preventScroll:true});}
