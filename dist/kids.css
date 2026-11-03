@@ -198,3 +198,112 @@ body.boom-shake > :not(.boom-canvas):not(.boom-flash):not(.boom-banner):not(.boo
 @keyframes boom-shake { 0%,100% { transform: translate(0); } 10% { transform: translate(-14px,8px); } 20% { transform: translate(12px,-10px); } 30% { transform: translate(-10px,-12px); } 40% { transform: translate(14px,10px); } 50% { transform: translate(-12px,6px); } 60% { transform: translate(8px,-8px); } 70% { transform: translate(-6px,6px); } 80% { transform: translate(5px,-4px); } 90% { transform: translate(-3px,3px); } }
 
 .home-reset { display: block; margin: 4px auto 0; font-size: 14px; opacity: .6; }
+
+/* ---- Fit to screen: game and home never need vertical scrolling on phones/tablets ---- */
+@media not ((orientation: landscape) and (max-height: 560px)) {
+  body[data-view="game"] { display: flex; flex-direction: column; height: 100dvh; min-height: 0; overflow: hidden; }
+  body[data-view="game"] .site-header, body[data-view="game"] footer { display: none; }
+  body[data-view="game"] main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: 100%; }
+  #game-view:not([hidden]) { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-bottom: 12px; width: 100%; box-sizing: border-box; }
+  #game-view .game-top { min-height: 44px; flex: none; }
+  #game-view .play-card { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 10px 14px 12px; overflow-y: auto; box-sizing: border-box; }
+  #game-view .coach { flex: none; margin-bottom: 2px; }
+  #game-view #game-mascot { font-size: 44px; }
+  #game-view .speech { font-size: 14px; padding: 5px 10px; border-width: 2px; }
+  #game-view .question-heading { flex: none; }
+  #game-view .question-heading h1 { font-size: clamp(20px, 3.4dvh, 30px); }
+  #game-view #question-description { display: none; }
+  #game-view .given-time { font-size: clamp(28px, 5dvh, 44px); line-height: 1.1; }
+  #game-view .clock-zone { flex: 1 1 0; min-height: 90px; margin: 4px 0; container-type: size; justify-content: center; }
+  #game-view .clock-zone[hidden], #game-view .choices[hidden] { display: none; }
+  #game-view .game-clock { width: min(100cqw, calc(100cqh - var(--tools, 0px))); max-width: none; margin: 0 auto; }
+  #game-view .clock-zone:has(#clock-tools:not([hidden])) { --tools: 68px; }
+  #game-view .clock-tools { margin-top: 8px; flex-wrap: nowrap; justify-content: center; }
+  #game-view .clock-tools button { width: 48px; height: 48px; font-size: 28px; }
+  #game-view .choices { flex: none; margin: 4px auto 8px; gap: 8px; }
+  #game-view .choices.match { grid-template-columns: repeat(3, 1fr); }
+  #game-view .choices.match .choice:last-child { grid-column: auto; width: auto; }
+  #game-view .choices.match { flex: 1 1 auto; align-content: center; }
+  #game-view .choice { min-height: 52px; padding: 6px; font-size: 21px; }
+  #game-view .choice-clock { max-width: min(120px, 18dvh); }
+  #game-view .answer-zone { flex: none; width: 100%; }
+  #game-view .time-inputs select { height: 52px; font-size: 26px; }
+  #game-view .button { min-height: 50px; font-size: 18px; }
+  #game-view .feedback { padding: 8px 12px; font-size: 15px; }
+  #game-view .feedback strong { font-size: 21px; }
+  #game-view .feedback:not(:first-child) { margin-top: 6px; }
+  #game-view .question-actions .text-button { min-height: 40px; }
+  #game-view .hint-panel { padding: 8px 12px; font-size: 15px; margin-top: 4px; }
+}
+
+/* Home screen: compact header, 2x2 level cards */
+@media (max-width: 640px) {
+  .site-header { flex-wrap: nowrap; justify-content: space-between; min-height: 52px; padding: 4px 10px; gap: 6px; }
+  .site-header nav { gap: 2px; }
+  .site-header nav a { font-size: 15px; padding: 8px 12px; min-height: 40px; }
+  .home-heading { display: flex; align-items: center; gap: 12px; padding: 6px 0 8px; text-align: left; }
+  .home-heading .mascot-btn { margin: 0; flex: none; }
+  #home-mascot { font-size: 72px; }
+  .home-heading h1 { font-size: 24px; line-height: 1.15; }
+  .home-heading p { display: none; }
+  .level-grid { grid-template-columns: 1fr 1fr; gap: 10px; max-width: none; }
+  .level-card { flex-direction: column; text-align: center; min-height: 0; padding: 10px 8px 12px; gap: 4px; justify-content: center; }
+  .level-card .level-arrow { display: none; }
+  .level-number { width: 44px; height: 44px; font-size: 26px; }
+  .level-copy { align-items: center; gap: 2px; }
+  .level-copy strong { font-size: 18px; }
+  .level-copy > span { font-size: 13px; line-height: 1.25; }
+  .home-help, .home-reset { min-height: 36px; }
+}
+@media (max-width: 640px) and (max-height: 700px) { .level-copy > span { display: none; } }
+@media (max-width: 640px) and (orientation: portrait) {
+  #game-view .choices.match { grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+  #game-view .choices.match .choice:last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); }
+  #game-view .choice-clock { max-width: min(150px, 20dvh); }
+}
+
+/* Landscape phones: same no-scroll goal, clock on the left and controls on the right */
+@media (orientation: landscape) and (max-height: 560px) {
+  body[data-view="game"] { display: flex; flex-direction: column; height: 100dvh; min-height: 0; overflow: hidden; }
+  body[data-view="game"] .site-header, body[data-view="game"] footer { display: none; }
+  body[data-view="game"] main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: 100%; }
+  #game-view:not([hidden]) { flex: 1; min-height: 0; display: flex; flex-direction: column; width: 100%; padding-bottom: 8px; }
+  #game-view .game-top { min-height: 36px; flex: none; }
+  #game-view .play-card { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto minmax(0, 1fr); column-gap: 20px; padding: 8px 20px 10px; overflow: hidden; position: relative; }
+  #game-view .question-heading { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 14px; }
+  #game-view .question-heading h1 { font-size: 20px; }
+  #game-view #question-description { display: none; }
+  #game-view .given-time { font-size: 28px; }
+  #game-view .clock-zone { min-height: 0; margin: 0; container-type: size; justify-content: center; align-self: stretch; }
+  #game-view .clock-zone[hidden], #game-view .choices[hidden] { display: none; }
+  #game-view .game-clock { width: min(100cqw, calc(100cqh - var(--tools, 0px))); max-width: none; margin: 0 auto; }
+  #game-view .clock-zone:has(#clock-tools:not([hidden])) { --tools: 60px; }
+  #game-view .clock-tools { margin-top: 6px; flex-wrap: nowrap; }
+  #game-view .clock-tools button { width: 42px; height: 42px; font-size: 24px; }
+  #game-view .answer-zone { align-self: center; max-width: none; }
+  #game-view .choices { align-self: center; margin: 0; }
+  #game-view .choices.match { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
+  #game-view .choice { min-height: 44px; font-size: 19px; }
+  #game-view .choice-clock { max-width: min(120px, 26dvh); }
+  #game-view .time-inputs select { height: 46px; font-size: 22px; }
+  #game-view .button { min-height: 44px; font-size: 17px; }
+  #game-view .feedback { padding: 6px 10px; font-size: 14px; }
+  #game-view .feedback strong { font-size: 18px; }
+  #game-view .hint-panel { padding: 6px 10px; font-size: 14px; }
+  #game-view .question-actions .text-button { min-height: 34px; }
+
+  .site-header { height: 44px; min-height: 0; }
+  .site-header nav a { min-height: 36px; padding: 6px 14px; font-size: 15px; }
+  .home-heading { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 2px 0 8px; }
+  .home-heading .mascot-btn { margin: 0; flex: none; }
+  #home-mascot { font-size: 56px; }
+  .home-heading h1 { font-size: 22px; }
+  .home-heading p { display: none; }
+  .level-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .level-card { flex-direction: column; text-align: center; min-height: 0; padding: 8px 6px 10px; gap: 2px; justify-content: center; }
+  .level-card .level-arrow, .level-copy > span { display: none; }
+  .level-number { width: 40px; height: 40px; font-size: 24px; }
+  .level-copy { align-items: center; }
+  .level-copy strong { font-size: 16px; }
+  .home-help, .home-reset { min-height: 32px; display: inline-block; margin: 0 8px; }
+}
