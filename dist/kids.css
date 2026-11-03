@@ -341,3 +341,9 @@ body.boom-shake > :not(.boom-canvas):not(.boom-flash):not(.boom-banner):not(.boo
   #game-view .choices.match .choice { height: auto; align-self: center; }
 }
 @media (orientation: portrait) and (max-width: 640px) { #game-view:not([hidden]) { padding-left: 8px; padding-right: 8px; } }
+
+/* Three clock choices: always two on top, one centred underneath (every screen size and orientation) */
+#game-view .choices.match { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 8px 12px; align-content: space-evenly;
+  --clock: max(70px, min(calc((100cqw - 12px) / 2 - 10px), calc((100cqh - 24px) / 2 - 10px))); }
+#game-view .choices.match .choice { height: auto; align-self: center; }
+#game-view .choices.match .choice:last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); }
