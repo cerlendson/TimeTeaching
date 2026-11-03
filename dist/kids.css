@@ -307,3 +307,37 @@ body.boom-shake > :not(.boom-canvas):not(.boom-flash):not(.boom-banner):not(.boo
   .level-copy strong { font-size: 16px; }
   .home-help, .home-reset { min-height: 32px; display: inline-block; margin: 0 8px; }
 }
+
+/* Clock-matching choices: fill all the free space with big clocks */
+#game-view .choices.match { flex: 1 1 0; min-height: 0; max-width: none; width: 100%; container-type: size; align-content: stretch; align-items: stretch; margin: 4px 0 8px; }
+#game-view .choices.match .choice { display: flex; align-items: center; justify-content: center; padding: 4px; min-height: 0; }
+#game-view .choices.match .choice-clock { max-width: none; margin: 0 auto; width: var(--clock, 120px); }
+@media (orientation: portrait) {
+  #game-view .choices.match { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px 12px;
+    --clock: max(80px, min(calc((100cqw - 12px) / 2 - 8px), calc((100cqh - 10px) / 2 - 8px))); }
+  #game-view .choices.match .choice:last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); }
+}
+@media (orientation: landscape) {
+  #game-view .choices.match { grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr; gap: 12px;
+    --clock: max(80px, min(calc((100cqw - 24px) / 3 - 8px), calc(100cqh - 8px))); }
+  #game-view .choices.match .choice:last-child { grid-column: auto; width: auto; }
+}
+@media (orientation: landscape) and (max-height: 560px) { #game-view .choices.match { align-self: stretch; margin: 0; } }
+@media (orientation: portrait) {
+  #game-view .play-card[data-mode="match"] { position: relative; }
+  #game-view .play-card[data-mode="match"] .coach { position: absolute; top: 6px; right: 10px; margin: 0; }
+  #game-view .play-card[data-mode="match"] .speech { display: none; }
+  #game-view .play-card[data-mode="match"] .question-heading { padding: 0 44px; }
+  #game-view .choices.match .choice { box-shadow: 0 3px 0 #d9ccff; }
+}
+@media (orientation: portrait) {
+  #game-view .play-card[data-mode="match"] { padding-left: 6px; padding-right: 6px; }
+  #game-view .choices.match { gap: 8px; --clock-gap: 8px; }
+  #game-view .choices.match .choice { padding: 2px; border-width: 2px; }
+}
+@media (orientation: portrait) {
+  #game-view .choices.match { grid-template-rows: auto auto; align-content: space-evenly;
+    --clock: max(80px, min(calc((100cqw - 8px) / 2 - 8px), calc((100cqh - 24px) / 2 - 8px))); }
+  #game-view .choices.match .choice { height: auto; align-self: center; }
+}
+@media (orientation: portrait) and (max-width: 640px) { #game-view:not([hidden]) { padding-left: 8px; padding-right: 8px; } }
